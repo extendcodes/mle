@@ -1,0 +1,1 @@
+my dockerfile had multiple commands wich it mean multiple layers and finally it will impact the performance

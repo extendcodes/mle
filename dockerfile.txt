@@ -1,0 +1,24 @@
+FROM oraclelinux 
+MAINTAINER Imad <imad.hadouchi@gmail.com>
+RUN yum -y update && yum -y install httpd 
+EXPOSE 80
+RUN echo "ServerName oracle.mle" > /etc/httpd/conf/httpd.conf
+ENTRYPOINT /usr/sbin/httpd -D FOREGROUND
+WORKDIR /var/www/html/ 
+COPY  Breakout-master .
+RUN yum -y install haproxy
+RUN systemctl enable haproxy
+RUN rm /etc/haproxy/haproxy.cfg
+RUN yum -y install mod_ssl
+RUN mkdir /etc/ssl/private
+RUN rm /etc/httpd/conf.d/ssl.conf
+RUN chmod 700 /etc/ssl/private
+RUN yum -y install openssl 
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/private/apache-selfsigned.crt -subj "/C=MA/ST=casablanca/L=casablanca/O=oracle Corp /OU=labs/CN=oracle.mle"
+RUN cat /etc/ssl/private/apache-selfsigned.key    /etc/ssl/private/apache-selfsigned.crt > /etc/ssl/private/apache-selfsigned.pem
+RUN openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+RUN cat /etc/ssl/certs/dhparam.pem | tee -a /etc/ssl/certs/apache-selfsigned.crt
+WORKDIR /etc/httpd/conf.d/
+COPY ssl.conf .
+WORKDIR /etc/haproxy/
+COPY haproxy.cfg .

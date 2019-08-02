@@ -1,0 +1,58 @@
+[user1@localhost dir2]$ ab -n 10000 -c 10 https://oracle.mle/
+This is ApacheBench, Version 2.3 <$Revision: 1430300 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking oracle.mle (be patient)
+Completed 1000 requests
+Completed 2000 requests
+Completed 3000 requests
+Completed 4000 requests
+Completed 5000 requests
+Completed 6000 requests
+Completed 7000 requests
+Completed 8000 requests
+Completed 9000 requests
+Completed 10000 requests
+Finished 10000 requests
+
+
+Server Software:        Apache/2.4.6
+Server Hostname:        oracle.mle
+Server Port:            443
+SSL/TLS Protocol:       TLSv1.2,ECDHE-RSA-AES256-GCM-SHA384,2048,256
+
+Document Path:          /
+Document Length:        760 bytes
+
+Concurrency Level:      10
+Time taken for tests:   44.479 seconds
+Complete requests:      10000
+Failed requests:        0
+Write errors:           0
+Total transferred:      10360000 bytes
+HTML transferred:       7600000 bytes
+Requests per second:    224.83 [#/sec] (mean)
+Time per request:       44.479 [ms] (mean)
+Time per request:       4.448 [ms] (mean, across all concurrent requests)
+Transfer rate:          227.46 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        5   29  17.2     28     668
+Processing:     1   15  14.0     14     644
+Waiting:        1   13  13.8     12     643
+Total:         13   44  21.7     42     681
+
+Percentage of the requests served within a certain time (ms)
+  50%     42
+  66%     45
+  75%     48
+  80%     50
+  90%     56
+  95%     62
+  98%     71
+  99%     80
+ 100%    681 (longest request)
+ ######################### Output Documentation #############################
+ my web server had a good average response time at a large number of simultaneous connections
